@@ -15,12 +15,6 @@ namespace ConsoleApp
         // Объекты таблицы Authors
         public DbSet<Author> Authors { get; set; }
 
-        public AppContext()
-        {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
-        }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS01;Database=EF;Trusted_Connection=True;TrustServerCertificate=True;");

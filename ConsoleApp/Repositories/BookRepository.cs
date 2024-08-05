@@ -1,4 +1,5 @@
 ﻿using ConsoleApp.Models;
+using System.Linq;
 
 namespace ConsoleApp.Repositories
 {
@@ -14,7 +15,7 @@ namespace ConsoleApp.Repositories
         // Метод для получения всех книг
         public IEnumerable<Book> GetAllBooks()
         {
-            return _context.Books.ToList();
+            return [.. _context.Books];
         }
 
         // Метод для получения пользователя по названию
@@ -65,8 +66,18 @@ namespace ConsoleApp.Repositories
             }
         }
 
+        public IEnumerable<Book> GetBooksListByGenre(string genre)
+        {
+            return [.. _context.Books.Where(b => b.Genre == genre)];
+        }
 
+        // Метод для получения списка книг определенного жанра
+        public IEnumerable<Book> GetBooksListByAuthor(string genre)
+        {
+            return [.. _context.Books.Where(b => b.Genre == genre)];
+        }
 
+        // Метод для получения списка книг определенного автора
 
     }
 }

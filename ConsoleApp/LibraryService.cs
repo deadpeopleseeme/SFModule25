@@ -2,7 +2,7 @@
 
 namespace ConsoleApp
 {
-    internal class LibraryService
+    public class LibraryService
     {
         private readonly AppContext _context;
 
@@ -73,15 +73,7 @@ namespace ConsoleApp
             // если автор найден, считаем книги
             if (author != null)
             {
-                booksCount = author.BooksAuthorWrote.Count;
-            }
-            if (author == null || booksCount == 0)
-            {
-                Console.WriteLine("У этого автора книг в библиотеке не найдено! ");
-            }
-            else
-            {
-                Console.WriteLine($"Книг в библиотеке, которые написал {author.Name}: {booksCount}");
+                booksCount = _bookRepository.GetBooksListByAuthor(author).Count();
             }
             return booksCount;
         }
@@ -91,7 +83,6 @@ namespace ConsoleApp
         {
             var booksOfGenreList = _bookRepository.GetBooksListByGenre(genre);
             var result = booksOfGenreList.Count();
-            Console.WriteLine($"Количество книг жанра {genre} в библиотеке: {result}");
             return result;
         }
 

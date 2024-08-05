@@ -30,7 +30,7 @@ namespace ConsoleApp
 
                 var book1 = new Book { Title = "Война и мир", Year = 777, Author = author1, Genre = "классика"};
                 var book2 = new Book { Title = "Мир или война", Year = 666, Author = author2, Genre = "неклассика"};
-                var book3 = new Book { Title = "Офигенная книга", Year = 555, Author = author2};
+                var book3 = new Book { Title = "Офигенная книга", Year = 555, Author = author2, Genre = "скучища"};
                 var book4 = new Book { Title = "Такая себе книга", Year = 444, Author = author3, Genre = "неклассика"};
 
                 var usr1 = new User { Name = "Валян", Email = "tst@gmail.com"};
@@ -46,6 +46,9 @@ namespace ConsoleApp
 
                 // сохраняем изменения
                 db.SaveChanges();
+
+                Console.WriteLine($"Книг жанра неклассика в библиотеке: {libraryService.HowManyBooksOfGenreHasLibrary("неклассика")}");
+
 
             }
         }

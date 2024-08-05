@@ -71,13 +71,13 @@ namespace ConsoleApp.Repositories
             return [.. _context.Books.Where(b => b.Genre == genre)];
         }
 
-        // Метод для получения списка книг определенного жанра
-        public IEnumerable<Book> GetBooksListByAuthor(string genre)
+
+        public IEnumerable<Book> GetBooksListByAuthor(Author author)
         {
-            return [.. _context.Books.Where(b => b.Genre == genre)];
+            return [.. _context.Books.Where(b => b.Author == author)];
         }
 
-        // Метод для получения списка книг определенного автора
+
 
     }
 }

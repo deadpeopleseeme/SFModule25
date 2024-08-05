@@ -14,7 +14,7 @@ namespace ConsoleApp.Repositories
         // Метод для получения всех пользователей
         public IEnumerable<User> GetAllUsers()
         {
-            return _context.Users.ToList();
+            return [.. _context.Users];
         }
 
         // Метод для получения пользователя по email
@@ -24,12 +24,6 @@ namespace ConsoleApp.Repositories
             return _context.Users.FirstOrDefault(u => u.Email == email);
         }
 
-        // Метод для добавления нового пользователя
-        public void AddUser(User user)
-        {
-            _context.Users.Add(user);
-            _context.SaveChanges();
-        }
 
         // Метод для обновления email пользователя по id
         public void UpdateUserEmail(int id, string newEmail)
@@ -39,7 +33,6 @@ namespace ConsoleApp.Repositories
             {
                 user.Email = newEmail;
             }
-            _context.SaveChanges();
         }
 
         // Метод для обновления имени пользователя по email
@@ -50,7 +43,6 @@ namespace ConsoleApp.Repositories
             {
                 user.Name = newName;
             }
-            _context.SaveChanges();
         }
 
         // Метод для удаления пользователя по email
@@ -60,7 +52,6 @@ namespace ConsoleApp.Repositories
             if (user != null)
             {
                 _context.Users.Remove(user);
-                _context.SaveChanges();
             }
         }
     }

@@ -8,7 +8,6 @@ namespace LibraryProjectTests
 {
     public class BaseLibraryTestTemplate
     {
-
         protected ConsoleApp.AppContext _appContext;
         protected UserRepository _userRepository;
         protected BookRepository _bookRepository;
@@ -23,8 +22,8 @@ namespace LibraryProjectTests
 
             _appContext = new ConsoleApp.AppContext(options);
             return _appContext;
-
         }
+
         public void SeedDatabase()
         {
             // Создание и добавление тестовых данных
@@ -34,14 +33,17 @@ namespace LibraryProjectTests
             _appContext.Authors.AddRange(auth1, auth2, auth3);
 
             var book1 = new Book { Title = "Книга с годом и без жанра", Author = auth1, Year = 555, Genre = "безжанра" };
-            var book2 = new Book { Title = "Книга с годом и жанром хоррор1", Author = auth2, Year = 555, Genre = "хоррор" };
+            var book2 = new Book { Title = "Книга с годом и жанром хоррор1", Author = auth2, Year = 556, Genre = "хоррор" };
             var book3 = new Book { Title = "Книга с годом и жанром хоррор2", Author = auth2, Year = 666, Genre = "хоррор" };
-            var book4 = new Book { Title = "Книга с годом и жанром лавстори1", Author = auth2, Year = 777, Genre = "лавстори" };
+            var book4 = new Book { Title = "Книга с годом и жанром лавстори1", Author = auth2, Year = 333, Genre = "лавстори" };
 
             _appContext.Books.AddRange(book1, book2, book3, book4);
 
-            var user = new User { Name = "Юзер1", Email = "user1@gmail.com" };
-            _appContext.Users.Add(user);
+            var user1 = new User { Name = "Юзер с 2мя книгами", Email = "user1@gmail.com" };
+            var user2 = new User { Name = "Юзер без книг", Email = "user2@gmail.com" };
+            book1.User = user1;
+            book2.User = user1;
+            _appContext.Users.AddRange(user1, user2);
 
             _appContext.SaveChanges();
         }
@@ -61,6 +63,7 @@ namespace LibraryProjectTests
         public void TearDown()
         {
             _appContext.Database.EnsureDeleted();
+            _appContext.Dispose();            
         }
     }
 }

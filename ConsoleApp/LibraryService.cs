@@ -1,4 +1,5 @@
-﻿using ConsoleApp.Repositories;
+﻿using ConsoleApp.Models;
+using ConsoleApp.Repositories;
 
 namespace ConsoleApp
 {
@@ -43,30 +44,8 @@ namespace ConsoleApp
             }
         }
 
-        // инфа о всех пользователях библиотеки
-        public void ShowAllLibraryUsersInfo()
-        {
-            var users = _userRepository.GetAllUsers();
-            foreach (var user in users)
-            {
-                Console.WriteLine($"{user.Id}: {user.Name}");
-                if (user.Books.Count == 0)
-                {
-                    Console.WriteLine("У этого пользователя на данный момент нет книг на руках");
-                }
-                else
-                {
-                    Console.WriteLine("На данный момент у этого пользователя следующие книги:");
-                    foreach (var book in user.Books)
-                    {
-                        Console.WriteLine($"{book.Title}, год выхода{book.Year}");
-                    }
-                }
-            }
-        }
-
         // метод для получения кол-ва книг определенного автора, итоговое задание 25, пункт 2
-        public int HowManyBooksOfAuthorHasLibrary(string authorName)
+        public int GetQuantityOfBooksWrittenByExactAuthor(string authorName)
         {
             var author = _authorRepository.GetAuthorByName(authorName);
             int booksCount = 0;
@@ -79,26 +58,58 @@ namespace ConsoleApp
         }
 
         // метод для получения кол-ва книг определенного жанра, итоговое задание 25, пункт 3
-        public int HowManyBooksOfGenreHasLibrary(string genre)
+        public int GetQuantityOfExactGenreBooksInLibrary(string genre)
         {
             var booksOfGenreList = _bookRepository.GetBooksListByGenre(genre);
             var result = booksOfGenreList.Count();
+            Console.WriteLine($"Книг жанра {genre} в библиотеке: {result}");
+            return result;
+        }
+
+        // метод для проверки есть ли определенная книга определенного автора, итоговое задание 25, пункт 4
+        public bool IsBookByExactAuthorWithExactTitleInLibrary(Book book, Author author)
+        {
+            if (book != null && author != null && (book.Author == author))
+            {
+                Console.WriteLine($"Книга {book.Title} автора {author.Name} есть в библиотеке!");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Такого сочетания книга+автор в библиотеке нет");
+                return false;
+            }
+        }
+
+        // метод для получения кол-ва книг у пользователя, итоговое задание, пункт 5
+        public bool DoesExactUserHaveExactBook(User user, Book book)
+        {
+            if(book == null || user == null)
+            {
+                Console.WriteLine("нет такой книги или пользователя, проверьте данные!");
+                return false;
+            }
+            var result = user.Books.Contains(book);
+            string textToShow = result ? "Да, такая книга у пользователя есть" : "Нет, такой книги у пользователя нет";
+            Console.WriteLine(textToShow);
             return result;
         }
 
         // метод для получения кол-ва книг у пользователя, итоговое задание 25, пункт 6
-        public void ShowHowManyBooksHasUser(string email)
+        public int GetQuantityOfBooksUserHas(User user)
         {
-            var usr = _userRepository.GetUserByEmail(email);
-            if (usr == null)
+            int bookQuantity;
+            if (user == null)
             {
-                Console.WriteLine($"В библиотеке нет пользователя с email {email}!");
+                Console.WriteLine($"В библиотеке нет такого пользователя!");
+                bookQuantity = -1;
             }
             else
             {
-                Console.WriteLine($"Количество книг на руках у {usr.Name} ({usr.Email}): {usr.Books.Count}");
+                bookQuantity = user.Books.Count;
+                Console.WriteLine($"Количество книг на руках у {user.Name} ({user.Email}): {bookQuantity}");
             }
+            return bookQuantity;
         }
-
     }
 }

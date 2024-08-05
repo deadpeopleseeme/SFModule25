@@ -1,13 +1,5 @@
-﻿using ConsoleApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LibraryProjectTests
+﻿namespace LibraryProjectTests
 {
-
     public class LibraryFinalTaskTestsPartThree: BaseLibraryTestTemplate
     {
         /// <summary>
@@ -15,10 +7,21 @@ namespace LibraryProjectTests
         /// </summary>
 
         [Test]
-        public void AssertThatLibraryHas2HorrorBooks()
+        public void AssertThatLibraryHasTwoHorrorBooks()
         {
-            Assert.That(_libraryService.HowManyBooksOfGenreHasLibrary("хоррор") == 2);
+            Assert.That(_libraryService.GetQuantityOfExactGenreBooksInLibrary("хоррор"), Is.EqualTo(2));
         }
 
+        [Test]
+        public void AssertThatLibraryHasOneLoveStoryBook()
+        {
+            Assert.That(_libraryService.GetQuantityOfExactGenreBooksInLibrary("лавстори"), Is.EqualTo(1));
+        }
+
+        [Test]
+        public void AssertThatLibraryHasNoComedyBooks()
+        {
+            Assert.That(_libraryService.GetQuantityOfExactGenreBooksInLibrary("комедия"), Is.EqualTo(0));
+        }
     }
 }

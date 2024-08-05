@@ -1,7 +1,5 @@
 ﻿using ConsoleApp.Models;
 using ConsoleApp.Repositories;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Abstractions;
 
 namespace ConsoleApp
 {
@@ -46,10 +44,6 @@ namespace ConsoleApp
 
                 // сохраняем изменения
                 db.SaveChanges();
-
-                Console.WriteLine($"Книг жанра неклассика в библиотеке: {libraryService.HowManyBooksOfGenreHasLibrary("неклассика")}");
-
-
             }
         }
     }

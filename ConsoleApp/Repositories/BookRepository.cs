@@ -18,18 +18,16 @@ namespace ConsoleApp.Repositories
             return [.. _context.Books];
         }
 
-        // Метод для получения пользователя по названию
-        // Можно использовать нахождение по Id, но это не очень логично, т.к. мы скорее знаем название книги, чем ID в базе
+        // Метод для получения книги по названию
         public Book GetBookByTitle(string title)
         {
             return _context.Books.FirstOrDefault(b => b.Title == title);
         }
 
-        // Метод для добавления новой книги
-        public void AddBook(Book book)
+        // Метод для получения книги по Id
+        public Book GetBookById(int id)
         {
-            _context.Books.Add(book);
-            _context.SaveChanges();
+            return _context.Books.FirstOrDefault(b => b.Id == id);
         }
 
         // Метод для обновления года книги по id
@@ -40,7 +38,6 @@ namespace ConsoleApp.Repositories
             {
                 book.Year = newYear;
             }
-            _context.SaveChanges();
         }
 
         // Метод для удаления книги по id
@@ -50,35 +47,50 @@ namespace ConsoleApp.Repositories
             if (book != null)
             {
                 _context.Books.Remove(book);
-                _context.SaveChanges();
             }
         }
 
-
-        // Метод для удаления книги по названию
+        // метод для удаления книги по названию
         public void DeleteBookByTitle(string title)
         {
             var book = _context.Books.FirstOrDefault(b => b.Title == title);
             if (book != null)
             {
                 _context.Books.Remove(book);
-                _context.SaveChanges();
             }
         }
-
+        
+        // возвращает все книги определенного жанра
         public IEnumerable<Book> GetBooksListByGenre(string genre)
         {
             return [.. _context.Books.Where(b => b.Genre == genre)];
         }
 
-
         public IEnumerable<Book> GetBooksListByAuthor(Author author)
         {
             return [.. _context.Books.Where(b => b.Author == author)];
         }
+        // метод для получения книг определенного жанра в определенных годах, итоговое задание 25, пункт 1
+        public IEnumerable<Book> GetBooksByGenreAndYearRange(string genre, int startYear, int endYear)
+        {
+            return [.. _context.Books.Where(b => b.Genre == genre && b.Year >= startYear && b.Year <= endYear)];
+        }
+        // метод для получения последней вышедшей книги, итоговое задание 25, пункт 7
+        public Book GetLatestBook()
+        {
+            return _context.Books.OrderByDescending(b => b.Year).FirstOrDefault();
+        }
+        // метод для получения списка книг с сортировкой по алфавиту, итоговое задание 25, пункт 8
+        public IEnumerable<Book> GetAllBooksSortedByTitle()
+        {
+            return [.. _context.Books.OrderBy(b => b.Title)];
+        }
 
-
-
+        // метод для получения списка книг с сортировкой по алфавиту, итоговое задание 25, пункт 9
+        public IEnumerable<Book> GetAllBooksSortedByYearDescending()
+        {
+            return [.. _context.Books.OrderByDescending(b => b.Year)];
+        }
     }
 }
 

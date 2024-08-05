@@ -22,7 +22,6 @@ namespace LibraryProjectTests
                 .Options;
 
             _appContext = new ConsoleApp.AppContext(options);
-            SeedDatabase();
             return _appContext;
 
         }

@@ -87,6 +87,7 @@ namespace ConsoleApp
             if(book == null || user == null)
             {
                 Console.WriteLine("нет такой книги или пользователя, проверьте данные!");
+                Console.WriteLine("нет такой книги или пользователя, проверьте данные!");
                 return false;
             }
             var result = user.Books.Contains(book);

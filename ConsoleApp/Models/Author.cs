@@ -1,4 +1,5 @@
 ﻿namespace ConsoleApp.Models
+namespace ConsoleApp.Models
 {
     public class Author
     {

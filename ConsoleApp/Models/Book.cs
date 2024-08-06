@@ -12,7 +12,11 @@
         // инфа о пользователе, на руках у которого сейчас находится книга
         // nullable для возможности удаления инфы о юзере, т.е. о возврате книги в библиотеку
         public User? User { get; set; }
+        public int? UserId { get; set; }
+
         public Author Author { get; set; }
+        public int AuthorId { get; set;}
+        public int AuthorId { get; set;}
 
     }
 }
